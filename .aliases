@@ -1,0 +1,8 @@
+alias ..="cd .."
+alias ll="ls -l --color"
+alias la="ls -la --color"
+alias sdnow="shutdown now"
+alias ees="wine ~/apps/EES/ees.exe > /dev/null 2>&1 &"
+alias ydl="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'"
+alias xo=xdg-open
+alias qconf='vim ~/.config/qtile/config.py'
