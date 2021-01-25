@@ -27,7 +27,7 @@
 from typing import List  # noqa: F401
 
 from libqtile import bar, layout, widget, hook
-from libqtile.config import Click, Drag, Group, Key, Screen
+from libqtile.config import Click, Drag, Group, Key, Screen, ScratchPad, DropDown
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
@@ -72,6 +72,7 @@ keys = [
     Key([mod], "Tab", lazy.next_layout()),
     Key([mod], "w", lazy.window.kill()),
 
+    # Qtile commands
     Key([mod, "control"], "r", lazy.restart()),
     Key([mod, "control"], "q", lazy.shutdown()),
     Key([mod], "r", lazy.spawncmd()),
@@ -108,8 +109,8 @@ def_layout = "bsp"
 
 group_names=[("  ",{'layout': def_layout, 'spawn':'kitty'}),
            ("  ",{'layout': def_layout}),
-           ("  ",{'layout': def_layout,'spawn':'firefox'}),
-           ("  ",{'layout': def_layout}), 
+           ("  ",{'layout': def_layout, 'spawn':'firefox'}),
+           ("  ",{'layout': def_layout, 'spawn':'kitty -e zsh -c ua-update-all'}), 
            ("  ",{'layout': def_layout, 'spawn':'kitty -e /home/daniel/mic_over_mumble/mic_over_mumble'}),
            (" ﭮ ",{'layout': def_layout, 'spawn':'discord'}),
            ("  ",{'layout': def_layout, 'spawn':'kitty -e /home/daniel/.local/bin/yterm'})]
@@ -119,6 +120,41 @@ groups = [Group(name, **kwargs) for name, kwargs in group_names]
 for i, (name, kwargs) in enumerate(group_names, 1):
     keys.append(Key([mod], str(i), lazy.group[name].toscreen()))        # Switch to another group
     keys.append(Key([mod, "shift"], str(i), lazy.window.togroup(name))) # Send current window to another group	
+
+# Append a Scratchpad group
+groups.append(
+    ScratchPad(
+        "scratchpad", [
+            # Define a drop down terminal
+            # It is placed in the upper third of the screen by default
+            DropDown(
+                "kitty",
+                "/usr/bin/kitty",
+                opacity=0.88,
+                height=0.55,
+                width=0.80
+            ),
+
+            # Define another terminal exclusively for qshell at different position
+            DropDown(
+                "qshell",
+                "/usr/bin/kitty -e qshell",
+                x=0.05,
+                y=0.4,
+                width=0.9,
+                height=0.6,
+                opacity=0.9,
+                on_focus_lost_hide=True
+            ),
+        ]
+    )
+)
+
+# Define keys to toggle the dropdown terminals
+keys.extend([
+    Key([], "F12", lazy.group["scratchpad"].dropdown_toggle("kitty")),
+    Key([], "F11", lazy.group["scratchpad"].dropdown_toggle("qshell")),
+])
 
 ##### DEFAULT THEME SETTINGS FOR LAYOUTS #####
 layout_theme = {"border_width": 2,

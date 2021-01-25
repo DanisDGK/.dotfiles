@@ -62,7 +62,7 @@ ZSH_THEME="gentoo"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git vscode dotbare
+  git vscode dotbare rustup cargo
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -124,3 +124,14 @@ export PATH="${PATH}:/home/daniel/.local/bin"
 # <<< conda initialize <<<
 
 # eval "$(starship init zsh)"
+
+autoload -U compinit && compinit
+
+alias ua-drop-caches='sudo paccache -rk3; yay -Sc --aur --noconfirm'
+alias ua-update-all='export TMPFILE="$(mktemp)"; \
+	sudo true; \
+	rate-arch-mirrors --max-delay=21600 | tee -a $TMPFILE \
+	  && sudo mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-backup \
+	  && sudo mv $TMPFILE /etc/pacman.d/mirrorlist \
+	  && ua-drop-caches \
+	  && yay -Syyu --noconfirm'
