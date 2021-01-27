@@ -96,7 +96,11 @@ keys = [
     Key([mod, "control"], "l", lazy.layout.grow_right()),
     Key([mod, "shift"], "n", lazy.layout.normalize()),
     Key([mod], "o", lazy.layout.maximize()),
-    
+    Key([mod, "shift"], "p", lazy.spawn('rofi -show power-menu -modi "power-menu:rofi-power-menu --choices=shutdown/reboot" \
+                            -font "JetBrainsMono Nerd Font 80"\
+                            -theme ~/.config/rofi/config.rasi\
+                            -fullscreen')),
+
     # Custom keybinds
     Key([mod, "shift"], "r", lazy.spawn("rofi -show run -width 60 -theme ~/.cache/wal/colors-rofi-dark.rasi")),
     Key([], "Print", lazy.spawn("flameshot gui")),
