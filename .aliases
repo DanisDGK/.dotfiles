@@ -6,3 +6,5 @@ alias ees="wine ~/apps/EES/ees.exe > /dev/null 2>&1 &"
 alias ydl="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'"
 alias xo=xdg-open
 alias qconf='vim ~/.config/qtile/config.py'
+alias ua-rank-mirrors='sudo reflector --country Latvia,Lithuania,Estonia,Sweden,Germany,Finland --age 12 --protocol https,http --sort rate --save /etc/pacman.d/mirrorlist'
+alias ua-update-penrose='cd /home/daniel/.config/penrose && cargo build --release'

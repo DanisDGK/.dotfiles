@@ -127,11 +127,4 @@ export PATH="${PATH}:/home/daniel/.local/bin"
 
 autoload -U compinit && compinit
 
-alias ua-drop-caches='sudo paccache -rk3; yay -Sc --aur --noconfirm'
-alias ua-update-all='export TMPFILE="$(mktemp)"; \
-	sudo true; \
-	rate-arch-mirrors --max-delay=21600 | tee -a $TMPFILE \
-	  && sudo mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-backup \
-	  && sudo mv $TMPFILE /etc/pacman.d/mirrorlist \
-	  && ua-drop-caches \
-	  && yay -Syyu --noconfirm'
+export EDITOR='vim'

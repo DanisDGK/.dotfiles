@@ -286,7 +286,11 @@ screens = [
                 widget.TextBox(
                     "⏻",
                     fontsize = 18,
-                    mouse_callbacks = {'Button1': lambda qtile: qtile.cmd_spawn('rofi -show p -modi p:/home/daniel/.local/bin/rofi-power-menu -lines 2')},
+                    mouse_callbacks = {'Button1': lambda qtile: qtile.cmd_spawn('rofi -show power-menu -modi "power-menu:rofi-power-menu --choices=shutdown/reboot" \
+                            -font "JetBrainsMono Nerd Font 80"\
+                            -theme ~/.config/rofi/config.rasi\
+                            -fullscreen')
+                            },
                     padding = 10,
                     ),
                 ],
