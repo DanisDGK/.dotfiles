@@ -128,4 +128,3 @@ export PATH="${PATH}:/home/daniel/.local/bin"
 autoload -U compinit && compinit
 
 export EDITOR='vim'
-eval "$(pyenv init -)"

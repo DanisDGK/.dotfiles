@@ -114,10 +114,10 @@ def_layout = "bsp"
 group_names=[("  ",{'layout': def_layout, 'spawn':'kitty'}),
            ("  ",{'layout': def_layout}),
            ("  ",{'layout': def_layout, 'spawn':'firefox'}),
-           ("  ",{'layout': def_layout, 'spawn':'kitty -e zsh -c ua-update-all'}), 
+           ("  ",{'layout': def_layout}), 
            ("  ",{'layout': def_layout, 'spawn':'kitty -e /home/daniel/mic_over_mumble/mic_over_mumble'}),
            (" ﭮ ",{'layout': def_layout, 'spawn':'discord'}),
-           ("  ",{'layout': def_layout, 'spawn':'kitty -e /home/daniel/.local/bin/yterm'}),
+           ("  ",{'layout': def_layout}),
            ("  ",{'layout': 'floating'})]
 
 groups = [Group(name, **kwargs) for name, kwargs in group_names]
