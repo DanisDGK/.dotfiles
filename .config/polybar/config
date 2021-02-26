@@ -1,0 +1,394 @@
+[colors]
+background = #282a36
+background-alt = #44475a
+foreground = #f8f8f2
+foreground-alt = #6272a4
+primary = #f8f8f2
+secondary = #c8c8d2
+alert = #f1fa8c
+active = {active}
+inactive = {inactive}
+highlight = #8be9fd
+error = #ff5555
+
+[bar/top]
+monitor = ${env:MONITOR:}
+dpi = ${xrdb:Xft.dpi:-1}
+font-0 = ${xrdb:font:mononoki Nerd Font:size=10:antialias=true:autohint=true}
+font-1 = ${xrdb:font:mononoki Nerd Font:size=16:antialias=true:autohint=true}
+monitor-strict = false
+override-redirect = true
+bottom = false
+fixed-center = true
+width = 100%
+height = 20px
+offset-x = 0%
+offset-y = 0%
+enable-ipc = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+radius = 0
+line-size = 3
+line-color = #000000
+
+border-size = 0
+border-color = #000000
+
+padding-left = 0
+padding-right = 0
+
+module-margin-left = 0
+module-margin-right = 0
+
+modules-left = powermenu bspwm 
+
+modules-center = date
+
+modules-right =  info-hackspeed sep xkeyboard sep pulseaudio sep
+
+tray-scale = 1.0
+tray-position = right
+tray-padding = 1
+tray-maxsize = 16
+tray-background = ${colors.background}
+
+wm-restack = bspwm
+
+;override-redirect = true
+
+scroll-up = #bspwm.next
+scroll-down = #bspwm.prev
+
+cursor-click = pointer
+cursor-scroll = default
+
+[bar/bottom]
+monitor = ${env:MONITOR:}
+dpi = ${xrdb:Xft.dpi:-1}
+font-0 = ${xrdb:font:mononoki Nerd Font:size=10:antialias=true:autohint=true}
+font-1 = ${xrdb:font:mononoki Nerd Font:size=16:antialias=true:autohint=true}
+monitor-strict = false
+override-redirect = true
+bottom = true
+fixed-center = true
+width = 100%
+height = 20px
+offset-x = 0%
+offset-y = 0%
+enable-ipc = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+radius = 0
+line-size = 3
+line-color = #000000
+
+border-size = 0
+border-color = #000000
+
+padding-left = 0
+padding-right = 0
+
+module-margin-left = 0
+module-margin-right = 0
+
+modules-left = cmus
+
+modules-center = xwindow
+
+modules-right = ipc-dunst sep info-kernel
+
+wm-restack = bspwm
+
+;override-redirect = true
+
+cursor-click = pointer
+cursor-scroll = default
+
+[module/ipc-dunst]
+type = custom/ipc
+hook-0 = dunstctl is-paused
+hook-1 = dunstctl set-paused toggle && polybar-msg -p %pid% hook ipc-dunst 1
+initial = 1
+
+format = "Dunst paused: <output>"
+
+click-left = polybar-msg -p %pid% hook ipc-dunst 2
+
+[module/info-kernel]
+type = custom/script
+exec = uname -r
+interval = 1024
+label = " %output%"
+
+[module/cmus]
+type = custom/script
+
+exec = ~/.config/polybar/cmus.sh
+exec-if = pgrep -x cmus
+interval = 1
+
+click-left = cmus-remote --next
+click-right = cmus-remote --prev
+click-middle = cmus-remote --pause
+scroll-up = cmus-remote --volume +5%
+scroll-down = cmus-remote --volume -5%
+
+label-font = ${xrdb:font:mononoki Nerd Font:size=8:antialias=true:autohint=true}
+format = <label>
+format-foreground = ${colors.foreground}
+; format-underline = ${colors.foreground}
+label = " %output%"
+label-maxlen = 50
+
+[module/info-hackspeed]
+type = custom/script
+exec = ~/.config/polybar/info-hackspeed.sh
+tail = true
+interval = 1
+label = "  %output%"
+
+[module/date]
+type = internal/date
+interval = 1
+
+format =  <label>
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+
+label = "%date% %time%"
+label-padding = 1
+label-foreground = ${colors.foreground}
+
+date = %F
+
+time = %H:%M:%S
+
+[module/filesystem]
+type = internal/fs
+
+mount-0 = /
+interval = 10
+fixed-values = true
+spacing = 1
+
+format-mounted = <label-mounted>
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+
+label-mounted = %used% / %total%
+label-mounted-padding = 1
+label-mounted-foreground = ${colors.foreground}
+label-mounted-background = ${colors.background}
+
+[module/xwindow]
+type=internal/xwindow
+
+format=<label>
+
+label="%title%"
+label-foreground=${colors.foreground}
+label-padding = 1
+label-maxlen = 50
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+format-volume = <label-volume>
+
+label-volume = "墳 %percentage%%"
+label-volume-padding = 1
+label-volume-foreground = ${colors.foreground}
+
+label-muted = "婢 0%"
+label-muted-padding = 1
+label-muted-foreground = ${colors.foreground-alt}
+
+[module/xkeyboard]
+type = internal/xkeyboard
+
+format=  <label-layout><label-indicator>
+
+label-layout = "%name%"
+label-layout-padding = 1
+
+label-indicator-on = %name%
+label-indicator-on-padding-right = 1
+label-indicator-on-foreground = ${colors.foreground-alt}
+
+[module/battery]
+type = internal/battery
+
+battery = BAT0
+adapter = ADP1
+full-at = 100
+
+format-charging = <label-charging>
+format-discharging = <label-discharging>
+
+label-charging = CHR %percentage%%
+
+label-discharging = BAT %percentage%%
+
+[module/sep]
+type = custom/text
+
+content = " | "
+
+[module/space]
+type = custom/text
+
+content = " "
+
+[module/bspwm]
+type = internal/bspwm
+
+pin-workspaces = true
+
+format = <label-state>
+;[label-mode]
+
+label-focused = %name%
+label-focused-background = ${colors.background-alt}
+label-focused-underline= ${colors.primary}
+label-focused-padding = 1
+
+label-occupied = %name%
+label-occupied-padding = 1
+
+label-urgent = %name%
+label-urgent-foreground = ${colors.background}
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 1
+
+label-empty = %name%
+label-empty-foreground = ${colors.foreground-alt}
+label-empty-padding = 1
+
+label-monocle = m
+label-pseudotiled = T
+label-floating = s
+label-fullscreen = f
+
+label-marked = m
+label-marked-foreground = #a6f6c6
+label-locked = x
+label-locked-foreground = #a6f6c6
+label-sticky = y
+label-sticky-foreground = #a6f6c6
+label-private = z
+label-private-foreground = #a6f6c6
+
+; label-separator = |
+
+enable-click = true
+enable-scroll = false
+
+[module/cpu]
+type = internal/cpu
+
+label = %percentage%%
+label-padding-left = 1
+
+[module/memory]
+type = internal/memory
+
+format = <label>
+
+label = %gb_used% / %gb_total% | %gb_swap_used% / %gb_swap_total%
+label-padding = 1
+
+[module/temperature]
+type = internal/temperature
+
+format = <label>
+format-warn = <label-warn>
+
+label = %temperature-c%
+label-padding-right = 1
+
+label-warn = ! %temperatur-c%
+label-warn-padding-right = 1
+label-warn-foreground = ${colors.alert}
+
+[module/powermenu]
+type = custom/menu
+
+format-spacing = 1
+
+label-open =""
+label-open-padding = 1
+label-open-font = 1
+label-open-background = ${colors.background}
+label-open-foreground = ${colors.secondary}
+label-close = ""
+label-close-padding-left = 1
+label-close-font = 1
+label-close-background = ${colors.background}
+label-close-foreground = ${colors.secondary}
+label-separator = "|"
+label-separator-foreground = ${colors.foreground-alt}
+
+menu-0-0 = Reboot
+menu-0-0-font = 1
+menu-0-0-exec = menu-open-1
+menu-0-1 = Power Off
+menu-0-1-font = 1
+menu-0-1-exec = menu-open-2
+;menu-0-2 = Hibernate
+;menu-0-2-font = 1
+;menu-0-2-exec = menu-open-3
+;menu-0-3 = Suspend
+;menu-0-3-font = 1
+;menu-0-3-exec = menu-open-4
+;menu-0-4 = Lock
+;menu-0-4-font = 1
+;menu-0-4-exec = menu-open-5
+menu-0-5 = Logout
+menu-0-5-font = 1
+menu-0-5-exec = menu-open-6
+
+menu-1-0 = Reboot
+menu-1-0-font = 1
+menu-1-0-exec = systemctl reboot
+menu-1-1 = Cancel
+menu-1-1-font = 1
+menu-1-1-exec = menu-open-0
+
+menu-2-0 = Power Off
+menu-2-0-font = 1
+menu-2-0-exec = systemctl poweroff
+menu-2-1 = Cancel
+menu-2-1-font = 1
+menu-2-1-exec = menu-open-0
+
+menu-3-0 = Hibernate
+menu-3-0-font = 1
+menu-3-0-exec = systemctl hibernate
+menu-3-1 = Cancel
+menu-3-1-font = 1
+menu-3-1-exec = menu-open-0
+
+menu-4-0 = Suspend
+menu-4-0-font = 1
+menu-4-0-exec = systemctl suspend
+menu-4-1 = Cancel
+menu-4-1-font = 1
+menu-4-1-exec = menu-open-0
+
+menu-5-0 = Lock
+menu-5-0-font = 1
+menu-5-0-exec = loginctl lock-session
+menu-5-1 = Cancel
+menu-5-1-font = 1
+menu-5-1-exec = menu-open-0
+
+menu-6-0 = Logout
+menu-6-0-font = 1
+menu-6-0-exec = kill -9 -1
+menu-6-1 = Cancel
+menu-6-1-font = 1
+menu-6-1-exec = menu-open-0

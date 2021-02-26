@@ -1,10 +1,24 @@
 alias ..="cd .."
-alias ll="ls -l --color"
-alias la="ls -la --color"
+alias ll="exa -l --color auto"
+alias la="exa -la --color auto"
 alias sdnow="shutdown now"
-alias ees="wine ~/apps/EES/ees.exe > /dev/null 2>&1 &"
 alias ydl="youtube-dl -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best'"
 alias xo=xdg-open
 alias qconf='vim ~/.config/qtile/config.py'
-alias ua-rank-mirrors='sudo reflector --country Latvia,Lithuania,Estonia,Sweden,Germany,Finland --age 12 --protocol https,http --sort rate --save /etc/pacman.d/mirrorlist'
-alias ua-update-penrose='cd /home/daniel/.config/penrose && cargo build --release'
+alias ua-drop-caches='sudo paccache -rk3; yay -Sc --aur --noconfirm'
+alias ua-update-all='export TMPFILE="$(mktemp)"; \
+	sudo true; \
+	rate-arch-mirrors --max-delay=21600 | tee -a $TMPFILE \
+	  && sudo mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist-backup \
+	  && sudo mv $TMPFILE /etc/pacman.d/mirrorlist \
+	  && ua-drop-caches \
+	  && yay -Syyu --noconfirm'
+
+alias ua-system-update='sudo pacman -Sy && sudo powerpill -Su && paru -Su'
+alias vim='nvim'
+alias ls="exa"
+alias cat="bat"
+alias ps="procs"
+alias grep="rg --color=auto"
+alias rg="rg --color=auto"
+alias ip="ip -color=auto"

@@ -1,1 +1,9 @@
-@import "~/.cache/wal/colors-rofi-dark"
+configuration {
+    modi:                       "file-browser,window,run,ssh,combi";
+    lines:                      20;
+    font:                       "mononoki Nerd Font 12";
+    theme:                      "dracula";
+    display-window:             "Window: ";
+    display-run:                "Run: ";
+    terminal:                   "kitty";
+}
